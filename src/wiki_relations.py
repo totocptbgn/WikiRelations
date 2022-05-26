@@ -1,21 +1,33 @@
+#!/usr/bin/python3
+
 import requests
 import re
+import sys
+from collections import Counter
 
 # Params
-seed = 'Albert Einstein'
-langage = 'en'
+seed = 'Overwatch'
+langage = 'fr'
+search_depth = 2
 
 # Header
-print('WikiRelations.')
-print(f'Starting from {seed} :')
+print('WikiRelations.', file=sys.stderr)
+print(f'Starting from {seed} :', file=sys.stderr)
+
+# Array that store egdes for the graph
+edges = []
 
 # Setup requests
 s = requests.Session()
 url = f"https://{langage}.wikipedia.org/w/api.php"
 
 # Get links from a wiki page
-def get_links(title):
+def get_links(title, depth):
     
+    msg = ('    ') * (search_depth - depth)
+    msg += '├── ' + title
+    print(msg, file=sys.stderr)
+
     # Call the API to retrieve all the links in the page
     params = {
         "action": "query",
@@ -50,20 +62,28 @@ def get_links(title):
             for link in val["links"]:
                 links.append(link["title"])
 
-    # Remove links that are are in the footer of the page
+    # Remove links that are in the footer of the page
     footer_nb = 0
     for i in reversed(links):
-        if  ':' in i:
+        if ':' in i:
             footer_nb += 1
         else:
             break
     links = links[:len(links) - footer_nb]
     
-    # Remove links that ends by a number to remove dates
-    regex = re.compile(r'[0-9]*$')
-    links = [i for i in links if not regex.match(i)]
+    # Remove links that has number to remove dates and unrelevant duplicates
+    regex = re.compile(r'[0-9]')
+    links = [i for i in links if not any(char.isdigit() for char in i)]
 
-    return links
 
-for i in get_links(seed):
-    print(i)
+    # Add new edges and call recursively on the links
+    end = depth == 1
+    for link in links:
+        edges.append((title, link))
+        if not end:
+            get_links(link, depth - 1)
+
+get_links(seed, search_depth)
+
+for key, value in Counter(edges).items():
+    print(key, value)
