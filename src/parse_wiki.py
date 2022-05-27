@@ -3,12 +3,11 @@
 import requests
 import re
 import sys
-from collections import Counter
 
 # Params
-seed = 'Overwatch'
-langage = 'fr'
-search_depth = 2
+seed = sys.argv[1]
+langage = 'en'
+search_depth = int(sys.argv[2])
 
 # Header
 print('WikiRelations.', file=sys.stderr)
@@ -83,7 +82,10 @@ def get_links(title, depth):
         if not end:
             get_links(link, depth - 1)
 
+# First call to parse from the seed page
 get_links(seed, search_depth)
 
-for key, value in Counter(edges).items():
-    print(key, value)
+# Print in a CSV format the edges of the graph produced
+for edge in edges:
+    print(f"{edge[0].replace(';', ',')};{edge[1].replace(';', ',')}")
+
