@@ -12,9 +12,9 @@ $ python3 src/parse_wiki.py [Name of the page] [Depth] > src/csv/[Output filenam
 python3 src/parse_wiki.py 'Star Wars' 2 > src/csv/sw_2.csv
 ```
 
-Plot graph (WIP):
+Plot graph :
 ```sh
-python3 src/plot_graph.py
+python3 src/plot_graph_wiki.py
 ```
 
 ## Dependencies :

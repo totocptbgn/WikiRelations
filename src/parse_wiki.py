@@ -88,4 +88,3 @@ get_links(seed, search_depth)
 # Print in a CSV format the edges of the graph produced
 for edge in edges:
     print(f"{edge[0].replace(';', ',')};{edge[1].replace(';', ',')}")
-

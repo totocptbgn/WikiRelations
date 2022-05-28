@@ -4,8 +4,8 @@ import random
 
 g = nx.Graph()
 
-a = 30000
-b = 10000
+a = 3000
+b = 1000
 
 for i in range(a):
     x = random.randint(0, b)
