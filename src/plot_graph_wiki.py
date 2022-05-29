@@ -8,7 +8,7 @@ filename = 'src/csv/lotr_2.csv'
 # Creating the graph and the dataframe
 g = nx.Graph()
 df = pd.read_csv(filename, sep=';', header=None)
-df = df.sample(frac=0.1)
+df = df.sample(frac=0.3)
 print(f'Dataframe created.')
 
 # print(df.shape)
@@ -28,8 +28,8 @@ print('Layout edges.')
 options = {
     'with_labels': False,
     'node_color': 'black',
-    'node_size': 40,
-    'width': 1,
+    'node_size': 20,
+    'width': 0.5,
     'alpha': 0.5
 }
 fig = plt.figure(1, figsize=(100, 100))
