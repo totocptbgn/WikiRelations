@@ -2,6 +2,8 @@
 
 > Graph visualisation on wikipedia pages proximity.
 
+![Graph](/docs/wiki.png)
+
 ## Use
 
 Create a csv file a seed and a depth : 
